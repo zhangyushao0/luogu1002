@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+struct p
+{
+	long long int num = 0;
+	int level = 0;
+};
+
+int main()
+{	
+
+	int bx, by, mx, my;
+	cin >> bx >> by >> mx >> my;
+	p location[21][21];
+	location[0][0].level = 1;
+	location[0][0].num = 1;
+	location[mx][my].num = -1;
+	location[mx-2][my-1].num = -1;
+	location[mx-2][my+1].num = -1;
+	location[mx+2][my-1].num = -1;
+	location[mx+2][my+1].num = -1;
+	location[mx-1][my+2].num = -1;
+	location[mx-1][my-2].num = -1;
+	location[mx+1][my-2].num = -1;
+	location[mx+1][my+2].num = -1;
+	
+	for (int i = 0;i<=bx+by;i++)
+	{
+		for(int k=0;k<=bx;k++)
+			for(int j=0;j<=by;j++)
+				if (location[k][j].level == i + 1)
+				{
+					if (location[k + 1][j].num != -1)
+					{
+						location[k + 1][j].num += location[k][j].num;
+						location[k + 1][j].level = location[k][j].level+1;
+					}
+
+					if (location[k][j+1].num != -1)
+					{
+						location[k][j+1].num += location[k][j].num;
+						location[k][j+1].level = location[k][j].level + 1;
+					}
+				}
+	}
+	for (int k = 0; k <= bx; k++)
+	{
+		cout << endl;
+		for (int j = 0; j <= by; j++)
+			cout << location[k][j].num << "	";
+	}
+
+}
